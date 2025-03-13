@@ -95,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: "Enter the email",
                 obscureText: false,
                 controller: _emailController,
+                radius: 0,
               ),
 
               Padding(
@@ -112,6 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: "Enter the password",
                 obscureText: true,
                 controller: _passwordController,
+                radius: 0,
               ),
 
               Padding(

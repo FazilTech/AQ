@@ -5,6 +5,8 @@ class InputBoxDecoration extends StatelessWidget {
   const InputBoxDecoration({
     super.key,
     this.focusNode,
+    this.icon,
+    required this.radius,
     required this.hintText,
     required this.obscureText,
     required this.controller
@@ -14,6 +16,8 @@ class InputBoxDecoration extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextEditingController controller;
+  final Icon? icon;
+  final double radius;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +30,9 @@ class InputBoxDecoration extends StatelessWidget {
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Color.fromARGB(255, 207, 207, 245)
-            )
+              color: Color.fromARGB(255, 207, 207, 245),
+            ),
+            borderRadius: BorderRadius.circular(radius)
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
@@ -40,7 +45,8 @@ class InputBoxDecoration extends StatelessWidget {
           hintText: hintText,
           hintStyle: GoogleFonts.sora(
             color:Colors.grey[400]
-          )
+          ),
+          prefixIcon: icon,
         ),
       ),
     );
