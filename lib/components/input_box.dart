@@ -29,18 +29,18 @@ class InputBoxDecoration extends StatelessWidget {
         focusNode: focusNode,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: Color.fromARGB(255, 207, 207, 245),
             ),
             borderRadius: BorderRadius.circular(radius)
           ),
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
               color: Color.fromARGB(180, 0, 17, 238)
             )
           ),
 
-          fillColor: Colors.grey[200],
+          fillColor: const Color.fromRGBO(240, 240, 245, 1),
           filled: true,
           hintText: hintText,
           hintStyle: GoogleFonts.sora(

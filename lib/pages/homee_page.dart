@@ -1,5 +1,6 @@
 import 'package:aq/components/icon_container.dart';
 import 'package:aq/components/input_box.dart';
+import 'package:aq/components/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +30,7 @@ class HomeePage extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: const Color.fromRGBO(240, 240, 245, 1),
         body: Column(
           children: [
             // Header Row
@@ -65,9 +66,7 @@ class HomeePage extends StatelessWidget {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 1),
-              child: Row(
+            Row(
                 children: [
                   Expanded(
                     child:Container(
@@ -99,11 +98,10 @@ class HomeePage extends StatelessWidget {
                     const SizedBox(width: 10,)
                 ],
               ),
-            ),
 
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 8),
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -114,21 +112,26 @@ class HomeePage extends StatelessWidget {
                   bool isToday = dayData["isToday"] == "true";
 
                   return Container(
-                    padding: const EdgeInsets.symmetric(vertical:20 , horizontal: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
                     decoration: BoxDecoration(
                       color: isToday ? const Color.fromRGBO(162, 214, 249, 1) : Colors.grey[200],
                       borderRadius: BorderRadius.circular(20)
                     ),
                     child: Column(
                       children: [
-                        Text(
-                          dayData["day"]!,
-                          style: GoogleFonts.sora(
-                            color: const Color.fromRGBO(0, 53, 102, 1)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Text(
+                            dayData["day"]!,
+                            style: GoogleFonts.sora(
+                              color: const Color.fromRGBO(0, 53, 102, 1),
+                              fontSize: 13
+                            ),
                           ),
                         ),
                         const SizedBox(height: 10),
                         Container(
+                          margin: const EdgeInsets.only(bottom: 10),
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -151,25 +154,37 @@ class HomeePage extends StatelessWidget {
             const SizedBox(height: 20,),
 
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(162, 214, 249, 1)
+                  margin: const EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(162, 214, 249, 1),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2), 
+                            blurRadius: 3, 
+                            spreadRadius: 1, 
+                            offset: const Offset(0, 6),
+                          )
+                        ]
                   ),
                   child: Column(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
-                        decoration: const BoxDecoration(
-                          color: Color.fromRGBO(16, 0, 138, 0.1),
-                        
+                        margin: const EdgeInsets.only(top: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(16, 0, 138, 0.1),
+                          borderRadius: BorderRadius.circular(20)
                         ),
                         child: Row(
                           children: [
                             const Icon(
                               Icons.location_pin,
-                              size: 40,
+                              size: 35,
                               color: Colors.white,
                             ),
 
@@ -185,7 +200,7 @@ class HomeePage extends StatelessWidget {
                         )
                       ),
 
-                      const SizedBox(height: 30,),
+                      const SizedBox(height: 15,),
 
                       Row(
                         children: [
@@ -223,17 +238,19 @@ class HomeePage extends StatelessWidget {
                       ),
 
                       const SizedBox(height: 10,),
-                      
+
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Row(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(100)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 55),
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(100)
+                              ),
                             ),
                           ),
 
@@ -254,9 +271,9 @@ class HomeePage extends StatelessWidget {
                       Row(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: Colors.green,
                               borderRadius: BorderRadius.circular(100)
                             ),
                           ),
@@ -277,9 +294,55 @@ class HomeePage extends StatelessWidget {
 
                     ],
                   ),
+                ),
+
+                Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(240, 255, 181, 1),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2), 
+                            blurRadius: 3, 
+                            spreadRadius: 1, 
+                            offset: const Offset(0, 6),
+                          )
+                        ]
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Explore",
+                        style: GoogleFonts.sora(
+                          fontSize: 20,
+                          color: Color.fromRGBO(0, 53, 102, 1),
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+
+                      Text(
+                        "Expore policies \n and \n Organization",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.sora(
+                          fontSize: 15
+                        ),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: MyButton(
+                          color: const Color.fromRGBO(0, 53, 102, 1),
+                          onTap: (){}, 
+                          text: "Click"
+                          ),
+                      )
+                    ],
+                  ),
                 )
               ],
-            )
+            ),
           ],
         ),
       ),
