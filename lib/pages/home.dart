@@ -1,7 +1,6 @@
 import 'package:aq/components/bottom_navigation_bar.dart';
 import 'package:aq/pages/community_page.dart';
 import 'package:aq/pages/flash_page.dart';
-import 'package:aq/pages/home_page.dart';
 import 'package:aq/pages/homee_page.dart';
 import 'package:aq/pages/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +13,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  
   int _selectedIndex = 0;
 
-  void navigationBottomBar(int index){
+  void navigationBottomBar(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -32,12 +30,18 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    // Detect if keyboard is open
+    bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return Scaffold(
+      resizeToAvoidBottomInset: true, // Allow only content to move up
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavBar(
-        onTabChange: (index)=> navigationBottomBar(index),
-      ),
-      body: _pages[_selectedIndex]
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: isKeyboardOpen
+          ? null // Hide bottom navigation bar when keyboard is open
+          : BottomNavBar(
+              onTabChange: (index) => navigationBottomBar(index),
+            ),
     );
   }
 }

@@ -36,7 +36,7 @@ class BottomNavBar extends StatelessWidget {
             ),
             GButton(
               icon: Icons.chat_sharp,
-              text: 'Community',
+              text: 'Chat',
               textStyle: GoogleFonts.sora(
                 color: Colors.white
               ),

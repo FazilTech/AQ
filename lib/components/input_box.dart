@@ -22,7 +22,7 @@ class InputBoxDecoration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: TextField(
         obscureText: obscureText,
         controller: controller,
@@ -44,7 +44,7 @@ class InputBoxDecoration extends StatelessWidget {
           filled: true,
           hintText: hintText,
           hintStyle: GoogleFonts.sora(
-            color:Colors.grey[400]
+            color:Colors.grey[700]
           ),
           prefixIcon: icon,
         ),
