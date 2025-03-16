@@ -33,11 +33,11 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  Future<void> register(context) async {
+  Future<void> register(BuildContext context) async {
   if (_emailController.text.isEmpty ||
       _passwordController.text.isEmpty ||
       _confirmPasswordController.text.isEmpty ||
-      _nameController.text.isEmpty) { 
+      _nameController.text.isEmpty) {
     showErrorDialog("All fields are required.");
     return;
   }
@@ -59,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
     await _auth.createUserDocument(userCredential, name);
 
     if (mounted) {
-      Navigator.pop(context); 
+      Navigator.pop(context); // Dismiss the loading dialog
     }
 
     _emailController.clear();
@@ -68,12 +68,11 @@ class _RegisterPageState extends State<RegisterPage> {
     _nameController.clear();
 
     if (mounted) {
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/home'); // Navigate to home page
     }
-      
   } catch (e) {
     if (mounted) {
-      Navigator.pop(context); // Close loading dialog if an error occurs
+      Navigator.pop(context); // Dismiss the loading dialog if an error occurs
       showErrorDialog(e.toString());
     }
   }

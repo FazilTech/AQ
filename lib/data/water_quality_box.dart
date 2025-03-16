@@ -5,20 +5,17 @@ class WaterQualityBox extends StatelessWidget {
   final String title;
   final String value;
   final String iconName;
-  final String? previousValue;  // To compare with the previous value
   
   const WaterQualityBox({
     super.key,
     required this.title,
     required this.value,
     required this.iconName,
-    this.previousValue,  // Optional parameter for previous value
   });
 
   @override
   Widget build(BuildContext context) {
     double currentValue = double.tryParse(value) ?? 0.0;
-    double? prevValue = previousValue != null ? double.tryParse(previousValue!) : null;
 
     // Define ranges
     bool isPhValue = title == "PH Value";
@@ -28,8 +25,8 @@ class WaterQualityBox extends StatelessWidget {
 
     // Range checks
     bool isInRange = false;
-    Color valueColor = Colors.green;  // Default color if within range
-    String arrow = "";
+    Color valueColor = Colors.green; 
+
 
     if (isPhValue && currentValue >= 6.5 && currentValue <= 8.5) {
       isInRange = true;
@@ -40,23 +37,13 @@ class WaterQualityBox extends StatelessWidget {
     } else if (isD2Value && currentValue >= 5 && currentValue <= 14) {
       isInRange = true;
     }
-
-    // If the value is out of range, set the color to red
+    
     if (!isInRange) {
       valueColor = Colors.red;
     }
 
-    // If previous value exists, compare the new value with the old one
-    if (prevValue != null) {
-      if (currentValue > prevValue) {
-        arrow = "↑";  // Up arrow if the value increased
-      } else if (currentValue < prevValue) {
-        arrow = "↓";  // Down arrow if the value decreased
-      }
-    }
-
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
       decoration: BoxDecoration(
         color: const Color.fromRGBO(207, 207, 245, 1),
         borderRadius: BorderRadius.circular(20),
@@ -67,7 +54,8 @@ class WaterQualityBox extends StatelessWidget {
             title,
             style: GoogleFonts.sora(
               fontSize: 17,
-              color: Color.fromRGBO(0, 53, 102, 1),
+              color: const Color.fromRGBO(0, 53, 102, 1),
+              fontWeight: FontWeight.bold
             ),
           ),
           const SizedBox(height: 10),
@@ -93,22 +81,11 @@ class WaterQualityBox extends StatelessWidget {
                   Text(
                     value,
                     style: GoogleFonts.sora(
-                      fontSize: 15,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: valueColor,
                     ),
                   ),
-                  if (arrow.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        arrow,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: valueColor,
-                        ),
-                      ),
-                    ),
                 ],
               ),
             ],

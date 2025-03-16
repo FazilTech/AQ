@@ -1,6 +1,6 @@
-import 'package:aq/data/expense_data.dart';
 import 'package:aq/data/water_data.dart';
 import 'package:aq/firebase_options.dart';
+import 'package:aq/pages/homee_page.dart';
 import 'package:aq/services/authentication/auth_gate.dart';
 import 'package:aq/services/authentication/database_provider.dart';
 import 'package:aq/services/storage/storage_service.dart';
@@ -30,12 +30,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ExpenseData(),
-      builder: (context, child) => const MaterialApp(
+    return MaterialApp(
+        routes: {
+        '/home': (context) =>  const HomeePage(), // Define the home route
+        },
         debugShowCheckedModeBanner: false,
-        home: AuthGate()
-      ),
+        home: const AuthGate()
       );
   }
 }

@@ -22,7 +22,7 @@ class InputBoxDecoration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: TextField(
         obscureText: obscureText,
         controller: controller,
