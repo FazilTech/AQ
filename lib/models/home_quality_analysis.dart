@@ -7,14 +7,14 @@ class HomeQualityAnalysis extends StatelessWidget {
   final String city;
   final String country;
   final Map<String, dynamic> userData;
-  final Map<String, dynamic> waterQualityData; // Add this
+  final Map<String, dynamic> waterQualityData;
 
   const HomeQualityAnalysis({
     super.key,
     required this.city,
     required this.country,
     required this.userData,
-    required this.waterQualityData, // Add this
+    required this.waterQualityData,
   });
 
   @override
@@ -22,14 +22,24 @@ class HomeQualityAnalysis extends StatelessWidget {
     // Extract values from waterQualityData
     double phValue = double.tryParse(waterQualityData["phValue"] ?? "0.0") ?? 0.0;
     double tbValue = double.tryParse(waterQualityData["tbValue"] ?? "0.0") ?? 0.0;
-    double tpValue = double.tryParse(waterQualityData["tpValue"] ?? "0.0") ?? 0.0;
-    double d2Value = double.tryParse(waterQualityData["d2Value"] ?? "0.0") ?? 0.0;
+    double hdValue = double.tryParse(waterQualityData["HdValue"] ?? "0.0") ?? 0.0;
+    double soValue = double.tryParse(waterQualityData["SoValue"] ?? "0.0") ?? 0.0;
+    double chValue = double.tryParse(waterQualityData["ChValue"] ?? "0.0") ?? 0.0;
+    double suValue = double.tryParse(waterQualityData["SuValue"] ?? "0.0") ?? 0.0;
+    double coValue = double.tryParse(waterQualityData["CoValue"] ?? "0.0") ?? 0.0;
+    double ocValue = double.tryParse(waterQualityData["OcValue"] ?? "0.0") ?? 0.0;
+    double trValue = double.tryParse(waterQualityData["TrValue"] ?? "0.0") ?? 0.0;
 
     // Determine if values are within range
     bool isPhInRange = phValue >= 6.5 && phValue <= 8.5;
     bool isTbInRange = tbValue >= 0 && tbValue <= 5;
-    bool isTpInRange = tpValue >= 0 && tpValue <= 40;
-    bool isD2InRange = d2Value >= 5 && d2Value <= 14;
+    bool isHdInRange = hdValue < 120;
+    bool isSoInRange = soValue < 500;
+    bool isChInRange = chValue < 4;
+    bool isSuInRange = suValue < 250;
+    bool isCoInRange = coValue < 800;
+    bool isOcInRange = ocValue < 2;
+    bool isTrInRange = trValue < 80;
 
     String lastUpdatedTime = 'N/A';
     if (waterQualityData["dateTime"] != null) {
@@ -37,7 +47,18 @@ class HomeQualityAnalysis extends StatelessWidget {
         (waterQualityData["dateTime"] as Timestamp).toDate(),
       );
     }
-    
+
+    // Check if all values are within range
+    bool isWaterSafe = isPhInRange &&
+        isTbInRange &&
+        isHdInRange &&
+        isSoInRange &&
+        isChInRange &&
+        isSuInRange &&
+        isCoInRange &&
+        isOcInRange &&
+        isTrInRange;
+
     return Container(
       margin: const EdgeInsets.only(left: 15),
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 9),
@@ -46,8 +67,8 @@ class HomeQualityAnalysis extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
-            blurRadius: 4, 
-            spreadRadius: -1, 
+            blurRadius: 4,
+            spreadRadius: -1,
             offset: Offset(0, 6),
           )
         ],
@@ -62,6 +83,7 @@ class HomeQualityAnalysis extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
                   Icons.location_pin,
@@ -93,9 +115,7 @@ class HomeQualityAnalysis extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    isPhInRange && isTbInRange && isTpInRange && isD2InRange
-                        ? "Safe"
-                        : "Contaminated",
+                    isWaterSafe ? "Safe" : "Contaminated",
                     style: GoogleFonts.sora(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -117,105 +137,59 @@ class HomeQualityAnalysis extends StatelessWidget {
           const SizedBox(height: 6),
           Column(
             children: [
+              // Row for pH and Tb
               Row(
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 50),
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: isPhInRange? Colors.green : Colors.red,
-                              borderRadius: BorderRadius.circular(100)),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        "Ph",
-                        style: GoogleFonts.sora(
-                          fontSize: 12,
-                          color: Colors.black,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: isTbInRange ? Colors.green : Colors.red,
-                              borderRadius: BorderRadius.circular(100)),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        "Tb",
-                        style: GoogleFonts.sora(
-                          fontSize: 12,
-                          color: Colors.black,
-                        ),
-                      )
-                    ],
-                  ),
-                  
+                  _buildIndicator("Ph", isPhInRange),
+                  _buildIndicator("Tb", isTbInRange),
+                  _buildIndicator("Hd", isHdInRange),
                 ],
               ),
-              
-              const SizedBox(height: 10,),
-
+              const SizedBox(height: 10),
+              // Row for Hd and So
               Row(
                 children: [
-                  Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 50),
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: isTpInRange ? Colors.green : Colors.red,
-                          borderRadius: BorderRadius.circular(100)),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    "Tp",
-                    style: GoogleFonts.sora(
-                      fontSize: 12,
-                      color: Colors.black,
-                    ),
-                  )
+                  _buildIndicator("So", isSoInRange),
+                  _buildIndicator("Ch", isChInRange),
+                  _buildIndicator("Su", isSuInRange),
                 ],
               ),
-              const SizedBox(height: 7),
+              const SizedBox(height: 10),
+              // Row for Co and Oc
               Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: isD2InRange ? Colors.green : Colors.red,
-                          borderRadius: BorderRadius.circular(100)),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    "D2",
-                    style: GoogleFonts.sora(
-                      fontSize: 12,
-                      color: Colors.black,
-                    ),
-                  )
+                  _buildIndicator("Co", isCoInRange),
+                  _buildIndicator("Oc", isOcInRange),
+                  _buildIndicator("Tr", isTrInRange),
                 ],
               ),
-                ],
-              )
             ],
           )
+        ],
+      ),
+    );
+  }
+
+  // Helper method to build an indicator widget
+  Widget _buildIndicator(String label, bool isInRange) {
+    return Expanded(
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: isInRange ? Colors.green : Colors.red,
+              borderRadius: BorderRadius.circular(100),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            label,
+            style: GoogleFonts.sora(
+              fontSize: 12,
+              color: Colors.black,
+            ),
+          ),
         ],
       ),
     );
