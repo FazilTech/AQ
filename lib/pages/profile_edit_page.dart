@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileEditPage extends StatefulWidget {
@@ -152,7 +153,12 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: _updateProfile,
-                        child: Text('Save Changes'),
+                        child: Text(
+                          'Save Changes',
+                          style: GoogleFonts.sora(
+                            color: Colors.green
+                          ),
+                          ),
                       ),
                     ],
                   ),

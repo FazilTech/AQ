@@ -21,7 +21,7 @@ void main() async{
         ChangeNotifierProvider(create: (context) => WaterData()),
       ],
       child: const MyApp(),
-      )    
+      )
   );
 }
 
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {
-        '/home': (context) =>  const HomeePage(), // Define the home route
+        '/home': (context) =>  const HomeePage(),
         },
         debugShowCheckedModeBanner: false,
         home: const AuthGate()

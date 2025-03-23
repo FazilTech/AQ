@@ -22,25 +22,20 @@ class HomeQualityAnalysis extends StatelessWidget {
     // Extract values from waterQualityData
     double phValue = double.tryParse(waterQualityData["phValue"] ?? "0.0") ?? 0.0;
     double tbValue = double.tryParse(waterQualityData["tbValue"] ?? "0.0") ?? 0.0;
-    double hdValue = double.tryParse(waterQualityData["HdValue"] ?? "0.0") ?? 0.0;
-    double soValue = double.tryParse(waterQualityData["SoValue"] ?? "0.0") ?? 0.0;
-    double chValue = double.tryParse(waterQualityData["ChValue"] ?? "0.0") ?? 0.0;
-    double suValue = double.tryParse(waterQualityData["SuValue"] ?? "0.0") ?? 0.0;
-    double coValue = double.tryParse(waterQualityData["CoValue"] ?? "0.0") ?? 0.0;
-    double ocValue = double.tryParse(waterQualityData["OcValue"] ?? "0.0") ?? 0.0;
-    double trValue = double.tryParse(waterQualityData["TrValue"] ?? "0.0") ?? 0.0;
+    double doValue = double.tryParse(waterQualityData["doValue"] ?? "0.0") ?? 0.0;
+    double tdValue = double.tryParse(waterQualityData["tdValue"] ?? "0.0") ?? 0.0;
+    double clValue = double.tryParse(waterQualityData["clValue"] ?? "0.0") ?? 0.0;
+    double tpValue = double.tryParse(waterQualityData["tpValue"] ?? "0.0") ?? 0.0;
 
     // Determine if values are within range
     bool isPhInRange = phValue >= 6.5 && phValue <= 8.5;
     bool isTbInRange = tbValue >= 0 && tbValue <= 5;
-    bool isHdInRange = hdValue < 120;
-    bool isSoInRange = soValue < 500;
-    bool isChInRange = chValue < 4;
-    bool isSuInRange = suValue < 250;
-    bool isCoInRange = coValue < 800;
-    bool isOcInRange = ocValue < 2;
-    bool isTrInRange = trValue < 80;
+    bool isDoInRange = doValue >= 7;
+    bool isTdInRange = tdValue >= 10 && tdValue <= 30;
+    bool isClInRange = clValue >= 0 && clValue <= 4;
+    bool isTpInRange = tpValue >= 10 && tpValue <= 30;
 
+    // Get the last updated time
     String lastUpdatedTime = 'N/A';
     if (waterQualityData["dateTime"] != null) {
       lastUpdatedTime = DateFormat('HH:mm').format(
@@ -48,16 +43,9 @@ class HomeQualityAnalysis extends StatelessWidget {
       );
     }
 
-    // Check if all values are within range
-    bool isWaterSafe = isPhInRange &&
-        isTbInRange &&
-        isHdInRange &&
-        isSoInRange &&
-        isChInRange &&
-        isSuInRange &&
-        isCoInRange &&
-        isOcInRange &&
-        isTrInRange;
+    // Determine contamination status based on probability
+    double contamProb = double.tryParse(waterQualityData["contam_prob_rf"]?.toString() ?? "0.0") ?? 0.0;
+    bool isContaminated = contamProb >= 0.5; // If probability >= 50%, water is contaminated
 
     return Container(
       margin: const EdgeInsets.only(left: 15),
@@ -75,6 +63,7 @@ class HomeQualityAnalysis extends StatelessWidget {
       ),
       child: Column(
         children: [
+          // Location Row
           Container(
             margin: const EdgeInsets.only(top: 10),
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -101,6 +90,8 @@ class HomeQualityAnalysis extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
+
+          // User Profile and Water Safety Status
           Row(
             children: [
               CircleAvatar(
@@ -115,11 +106,11 @@ class HomeQualityAnalysis extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    isWaterSafe ? "Safe" : "Contaminated",
+                    isContaminated ? "Contaminated" : "Safe",
                     style: GoogleFonts.sora(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: const Color.fromRGBO(0, 53, 102, 1),
+                      color: isContaminated ? Colors.red : const Color.fromRGBO(0, 53, 102, 1),
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -135,32 +126,26 @@ class HomeQualityAnalysis extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
+
+          // Water Quality Indicators
           Column(
             children: [
-              // Row for pH and Tb
+              // Row for pH and Turbidity
               Row(
                 children: [
-                  _buildIndicator("Ph", isPhInRange),
+                  _buildIndicator("pH", isPhInRange),
                   _buildIndicator("Tb", isTbInRange),
-                  _buildIndicator("Hd", isHdInRange),
+                  _buildIndicator("DO", isDoInRange),
                 ],
               ),
               const SizedBox(height: 10),
-              // Row for Hd and So
+
+              // Row for Total Dissolved Solids and Chlorine Level
               Row(
                 children: [
-                  _buildIndicator("So", isSoInRange),
-                  _buildIndicator("Ch", isChInRange),
-                  _buildIndicator("Su", isSuInRange),
-                ],
-              ),
-              const SizedBox(height: 10),
-              // Row for Co and Oc
-              Row(
-                children: [
-                  _buildIndicator("Co", isCoInRange),
-                  _buildIndicator("Oc", isOcInRange),
-                  _buildIndicator("Tr", isTrInRange),
+                  _buildIndicator("TDS", isTdInRange),
+                  _buildIndicator("Cl", isClInRange),
+                  _buildIndicator("Temp", isTpInRange),
                 ],
               ),
             ],
