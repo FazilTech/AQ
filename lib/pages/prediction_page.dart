@@ -38,7 +38,7 @@ class _PredictionPageState extends State<PredictionPage> {
       return;
     }
 
-    final url = Uri.parse('http://192.168.0.108:5555/predict');
+    final url = Uri.parse('http://192.168.55.132:5555/predict');
     final response = await http.post(
       url,
       headers: {"Content-Type": "application/json"},

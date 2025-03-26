@@ -1,6 +1,7 @@
 import 'package:aq/components/bottom_navigation_bar.dart';
 import 'package:aq/pages/community_page.dart';
 import 'package:aq/pages/flash_page.dart';
+import 'package:aq/pages/flashp_page.dart';
 import 'package:aq/pages/homee_page.dart';
 import 'package:aq/pages/profile_page.dart';
 import 'package:flutter/material.dart';

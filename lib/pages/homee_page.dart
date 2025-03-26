@@ -100,7 +100,7 @@
     }
 
     Future<Map<String, dynamic>?> predictContamination(Map<String, double> data) async {
-    const String flaskUrl = "http://192.168.0.108:5555/predict"; // Replace with your Flask server IP
+    const String flaskUrl = "http://192.168.55.132:5555/predict"; // Replace with your Flask server IP
 
     try {
       print("Sending data to Flask server: $data"); // Debug statement
